@@ -29,6 +29,10 @@ public class FrameTabuleiro extends javax.swing.JFrame {
         txfCordPlayerY.setText(Integer.toString(tabuleiro.getPl().getCordY()));
         this.tabuleiro.getTb()[tabuleiro.getPl().getCordX()][tabuleiro.getPl().getCordY()].setPlayer(true);
 
+        txfCordStartX.setText(Integer.toString(tabuleiro.getPl().getCordX()));
+        txfCordStartY.setText(Integer.toString(tabuleiro.getPl().getCordY()));
+        this.tabuleiro.getTb()[tabuleiro.getPl().getCordX()][tabuleiro.getPl().getCordY()].setStart(true);
+
         txfCordObjetivoX.setText(Integer.toString(tabuleiro.getObj().getCordX()));
         txfCordObjetivoY.setText(Integer.toString(tabuleiro.getObj().getCordY()));
         this.tabuleiro.getTb()[tabuleiro.getObj().getCordX()][tabuleiro.getObj().getCordY()].setObjetivo(true);
@@ -68,6 +72,12 @@ public class FrameTabuleiro extends javax.swing.JFrame {
         for (int j = 0; j < tabuleiro.getDimensao(); j++) {
             for (int i = 0; i < tabuleiro.getDimensao(); i++) {
                 blTabuleiro[i][j] = new BlocoTabuleiro(tabuleiro.getTb()[i][j]);
+                if (tabuleiro.getTb()[i][j].isPassou()) {
+                    blTabuleiro[i][j].setPassou(i - tabuleiro.getTb()[i][j].getPaiX(), j - tabuleiro.getTb()[i][j].getPaiY());
+                }
+                if (tabuleiro.getTb()[i][j].isStart()) {
+                    blTabuleiro[i][j].setStart();
+                }
                 if (tabuleiro.getTb()[i][j].isPlayer()) {
                     blTabuleiro[i][j].setPlayer();
                 }
@@ -76,9 +86,6 @@ public class FrameTabuleiro extends javax.swing.JFrame {
                 }
                 if (tabuleiro.getTb()[i][j].isBarreira()) {
                     blTabuleiro[i][j].setBarreira();
-                }
-                if (tabuleiro.getTb()[i][j].isPassou()) {
-                    blTabuleiro[i][j].setPassou();
                 }
                 if (tabuleiro.getTb()[i][j].isPlayer() && tabuleiro.getTb()[i][j].isObjetivo()) {
                     blTabuleiro[i][j].setPlayerBanana();
@@ -118,6 +125,11 @@ public class FrameTabuleiro extends javax.swing.JFrame {
         txfNBarreiraX = new javax.swing.JTextField();
         txfNBarreiraY = new javax.swing.JTextField();
         btnSetBarreira = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txfCordStartX = new javax.swing.JTextField();
+        txfCordStartY = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -141,10 +153,11 @@ public class FrameTabuleiro extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txfCordPlayerX, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txfCordPlayerY, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txfCordPlayerY, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,7 +210,7 @@ public class FrameTabuleiro extends javax.swing.JFrame {
         );
         jpTabuleiroLayout.setVerticalGroup(
             jpTabuleiroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 582, Short.MAX_VALUE)
+            .addGap(0, 633, Short.MAX_VALUE)
         );
 
         jspTabuleiro.setViewportView(jpTabuleiro);
@@ -241,9 +254,9 @@ public class FrameTabuleiro extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txfNBarreiraX, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txfNBarreiraY, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -260,6 +273,40 @@ public class FrameTabuleiro extends javax.swing.JFrame {
                 .addComponent(btnSetBarreira))
         );
 
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Start"));
+
+        jLabel7.setText("X");
+
+        jLabel8.setText("Y");
+
+        txfCordStartX.setEditable(false);
+
+        txfCordStartY.setEditable(false);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txfCordStartX, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txfCordStartY, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel7)
+                .addComponent(jLabel8)
+                .addComponent(txfCordStartX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txfCordStartY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -269,16 +316,17 @@ public class FrameTabuleiro extends javax.swing.JFrame {
                 .addComponent(jspTabuleiro, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,16 +334,18 @@ public class FrameTabuleiro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnStart))
-                    .addComponent(jspTabuleiro, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE))
+                    .addComponent(jspTabuleiro, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -354,6 +404,24 @@ public class FrameTabuleiro extends javax.swing.JFrame {
                     estado = 3;
                     addLog("O macaco encontrou a banana");
                     btnStart.setText("Finalizar");
+                    //Atualiza lista de casas até o objetivo
+                    int cordX = tabuleiro.getObj().getCordX();
+                    int cordY = tabuleiro.getObj().getCordY();
+                    tabuleiro.getTb()[cordX][cordY].setRota(true);
+                    
+                    do{
+                        
+                        int tmpX = tabuleiro.getTb()[cordX][cordY].getPaiX();
+                        int tmpY = tabuleiro.getTb()[cordX][cordY].getPaiY();
+                        
+                        cordX = tmpX;
+                        cordY = tmpY;
+                        
+                        tabuleiro.getTb()[cordX][cordY].setRota(true);
+                        
+                    }while(!tabuleiro.getTb()[cordX][cordY].isStart());
+                    
+                    
                 } else {
                     btnStart.setText("Calcula");
                     addLog("O macaco se moveu para");
@@ -380,9 +448,12 @@ public class FrameTabuleiro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpTabuleiro;
     private javax.swing.JScrollPane jspTabuleiro;
@@ -391,6 +462,8 @@ public class FrameTabuleiro extends javax.swing.JFrame {
     private javax.swing.JTextField txfCordObjetivoY;
     private javax.swing.JTextField txfCordPlayerX;
     private javax.swing.JTextField txfCordPlayerY;
+    private javax.swing.JTextField txfCordStartX;
+    private javax.swing.JTextField txfCordStartY;
     private javax.swing.JTextField txfNBarreiraX;
     private javax.swing.JTextField txfNBarreiraY;
     // End of variables declaration//GEN-END:variables

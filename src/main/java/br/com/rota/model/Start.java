@@ -3,10 +3,10 @@ package br.com.rota.model;
 /**
  *
  * @author Dionathan Luan de Vargas
- * @since 17/05/2018
+ * @since 14/06/2018
  *
  */
-public class Objetivo {
+public class Start {
 
     private int cordX;
     private int cordY;

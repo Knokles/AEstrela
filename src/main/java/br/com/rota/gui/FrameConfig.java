@@ -2,6 +2,7 @@ package br.com.rota.gui;
 
 import br.com.rota.model.Objetivo;
 import br.com.rota.model.Player;
+import br.com.rota.model.Start;
 import br.com.rota.model.Tabuleiro;
 import javax.swing.JOptionPane;
 
@@ -188,9 +189,13 @@ public class FrameConfig extends javax.swing.JFrame {
                 Tabuleiro tabuleiro = new Tabuleiro(dimensao);
                 tabuleiro.setPl(new Player());
                 tabuleiro.setObj(new Objetivo());
+                tabuleiro.setSt(new Start());
 
                 tabuleiro.getPl().setCordX(plCordX);
                 tabuleiro.getPl().setCordY(plCordY);
+
+                tabuleiro.getSt().setCordX(plCordX);
+                tabuleiro.getSt().setCordY(plCordY);
 
                 tabuleiro.getObj().setCordX(objCordX);
                 tabuleiro.getObj().setCordY(objCordY);

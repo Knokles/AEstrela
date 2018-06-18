@@ -22,14 +22,19 @@ public class BlocoTabuleiro extends JPanel {
     private JLabel g;
     private JLabel h;
     private JLabel f;
+    private JLabel pai;
     private BufferedImage img;
 
     public BlocoTabuleiro(Casa casa) {
         super();
 
         img = null;
-        this.setPreferredSize(new Dimension(75, 75));
-        this.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(Color.black, 1), "[" + casa.imprimeCord() + "]"));
+        this.setPreferredSize(new Dimension(90, 90));
+        if (casa.isRota()) {
+            this.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(Color.white, 1), "[" + casa.imprimeCord() + "]"));
+        } else {
+            this.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(Color.black, 1), "[" + casa.imprimeCord() + "]"));
+        }
         this.setBackground(new Color(0, 200, 0));
 
         g = new JLabel("");
@@ -48,11 +53,18 @@ public class BlocoTabuleiro extends JPanel {
 
         f = new JLabel("");
         if (casa.getF() != -1) {
-            this.setBackground(new Color(0, 255, 0));
             f.setText("F = " + Double.toString(casa.getF()));
         }
         f.setFont(new java.awt.Font("Tahoma", 0, 9));
         add(f);
+
+        pai = new JLabel("");
+        if (casa.getPaiX() != -1 && casa.getPaiY() != -1) {
+            this.setBackground(new Color(0, 255, 0));
+            pai.setText("Pai [" + casa.imprimePai() + "]");
+        }
+        pai.setFont(new java.awt.Font("Tahoma", 0, 9));
+        add(pai);
 
     }
 
@@ -62,6 +74,7 @@ public class BlocoTabuleiro extends JPanel {
 
     public void setPlayer() {
         this.setBackground(new Color(0, 255, 0));
+        ocultaVariaveis();
         try {
             this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/player.png"));
         } catch (Exception e) {
@@ -70,6 +83,7 @@ public class BlocoTabuleiro extends JPanel {
     }
 
     public void setBarreira() {
+        ocultaVariaveis();
         try {
             this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/barreira.png"));
         } catch (Exception e) {
@@ -78,6 +92,7 @@ public class BlocoTabuleiro extends JPanel {
     }
 
     public void setObjetivo() {
+        ocultaVariaveis();
         try {
             this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/banana.png"));
         } catch (Exception e) {
@@ -85,10 +100,44 @@ public class BlocoTabuleiro extends JPanel {
         }
     }
 
-    public void setPassou() {
+    public void setPassou(int paiX, int paiY) {
         this.setBackground(new Color(0, 255, 0));
+        ocultaVariaveis();
         try {
-            this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/passou.png"));
+            if (paiX == -1 && paiY == -1) {
+                this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/passouNoroeste.png"));
+            }
+            if (paiX == 0 && paiY == -1) {
+                this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/passouNorte.png"));
+            }
+            if (paiX == 1 && paiY == -1) {
+                this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/passouNordeste.png"));
+            }
+            if (paiX == 1 && paiY == 0) {
+                this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/passouLeste.png"));
+            }
+            if (paiX == -1 && paiY == 0) {
+                this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/passouOeste.png"));
+            }
+            if (paiX == -1 && paiY == 1) {
+                this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/passouSudoeste.png"));
+            }
+            if (paiX == 0 && paiY == 1) {
+                this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/passouSul.png"));
+            }
+            if (paiX == 1 && paiY == 1) {
+                this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/passouSudeste.png"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void setStart() {
+        this.setBackground(new Color(0, 255, 0));
+        ocultaVariaveis();
+        try {
+            this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/arvore.png"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -96,11 +145,19 @@ public class BlocoTabuleiro extends JPanel {
 
     public void setPlayerBanana() {
         this.setBackground(new Color(0, 255, 0));
+        ocultaVariaveis();
         try {
             this.img = ImageIO.read(new File("src/main/java/br/com/rota/componente/macacoBanana.png"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void ocultaVariaveis() {
+        pai.setText("");
+        f.setText("");
+        g.setText("");
+        h.setText("");
     }
 
     @Override

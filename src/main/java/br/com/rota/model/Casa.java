@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.rota.model;
 
 /**
@@ -20,8 +15,12 @@ public class Casa {
     private boolean objetivo;
     private boolean passou;
     private boolean barreira;
+    private boolean start;
+    private boolean rota;
     private final int cordX;
     private final int cordY;
+    private int paiX;
+    private int paiY;
 
     public Casa(int cordX, int cordY) {
         this.cordX = cordX;
@@ -29,6 +28,9 @@ public class Casa {
         this.g = -1;
         this.h = -1;
         this.f = -1;
+        this.paiX = -1;
+        this.paiY = -1;
+        this.rota = false;
     }
 
     public double getG() {
@@ -90,6 +92,14 @@ public class Casa {
         this.barreira = barreira;
     }
 
+    public boolean isStart() {
+        return start;
+    }
+
+    public void setStart(boolean start) {
+        this.start = start;
+    }
+
     public int getCordX() {
         return cordX;
     }
@@ -98,7 +108,35 @@ public class Casa {
         return cordY;
     }
 
+    public int getPaiX() {
+        return paiX;
+    }
+
+    public void setPaiX(int paiX) {
+        this.paiX = paiX;
+    }
+
+    public int getPaiY() {
+        return paiY;
+    }
+
+    public void setPaiY(int paiY) {
+        this.paiY = paiY;
+    }
+
+    public boolean isRota() {
+        return rota;
+    }
+
+    public void setRota(boolean rota) {
+        this.rota = rota;
+    }
+
     public String imprimeCord() {
         return cordX + "," + cordY;
+    }
+
+    public String imprimePai() {
+        return paiX + "," + paiY;
     }
 }
